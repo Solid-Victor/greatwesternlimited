@@ -1,8 +1,6 @@
-'use client'
 import { useState } from "react";
 import { IoCopyOutline } from "react-icons/io5";
 import Image from "next/image";
-import dynamic from 'next/dynamic'
 
 // Also install this npm i --save-dev @types/react-lottie
 import Lottie from "react-lottie";
@@ -69,13 +67,10 @@ export const BentoGridItem = ({
   };
 
   const handleCopy = () => {
-    if (typeof window !== 'undefined') {
-      const text = "greatwestern@gmail.com";
-      navigator.clipboard.writeText(text);
-      setCopied(true);
-    }
+    const text = "greatwestern@gmail.com";
+    navigator.clipboard.writeText(text);
+    setCopied(true);
   };
-  
 
   return (
     <div
@@ -127,9 +122,11 @@ export const BentoGridItem = ({
               title="Read More"
               position="right"
               otherClasses="bg-[#10132E] text-white"
+             
               // handleClick={() => {
               //   window.location.href = "/about";
-              // }}
+              // }
+            
             />
           </div>
         )}
