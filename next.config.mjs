@@ -1,7 +1,12 @@
 import { withSentryConfig } from "@sentry/nextjs";
+import { fileURLToPath } from "url";
 import path from "path";
 
-/** @type {import('next').NextConfig} */
+const __filename = fileURLToPath(import.meta.url);
+const __dirname = path.dirname(__filename);
+
+const sentryEnabled = process.env.ENABLE_SENTRY === "true";
+
 const nextConfig = {
   eslint: {
     ignoreDuringBuilds: true,
@@ -12,22 +17,16 @@ const nextConfig = {
   },
 };
 
-const sentryWebpackOptions = {
-  // For all available options, see:
-  // https://github.com/getsentry/sentry-webpack-plugin#options
+const sentryOptions = {
   silent: true,
-  org: "javascript-mastery",
-  project: "javascript-nextjs",
-};
-
-const sentryBuildOptions = {
-  // For all available options, see:
-  // https://docs.sentry.io/platforms/javascript/guides/nextjs/manual-setup/
+  org: "victorsolid-ltd",
+  project: "construction-company",
   widenClientFileUpload: true,
-  transpileClientSDK: true,
   hideSourceMaps: true,
   disableLogger: true,
   automaticVercelMonitors: true,
 };
 
-export default withSentryConfig(nextConfig, sentryWebpackOptions, sentryBuildOptions);
+export default sentryEnabled
+  ? withSentryConfig(nextConfig, sentryOptions)
+  : nextConfig;
